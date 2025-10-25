@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Registro - SESHA</title>
+    <!-- Bootstrap CSS (CDN + SRI) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="style/stylesheet.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Añadido: imagen de la app en la sección de registro -->
+    <section class="register-hero" style="text-align:center; padding:1.2rem 1rem;">
+    <!-- Archivo renombrado a 'sesha-app.png' para evitar espacios y problemas de URL -->
+    <img src="assets/sesha-app.png" alt="SESHA APP" class="app-image" style="max-width:320px; width:100%; height:auto; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.12); display:inline-block;">
+    </section>
+
+    <header>
+        <nav>
+            <div class="logo">SESHA</div>
+            <div class="nav-links">
+                <a href="landing.html">Inicio</a>
+                <a href="landing.html#caracteristicas">Características</a>
+                <a href="landing.html#contacto">Contacto</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card register-card">
+                        <div class="card-body">
+                            <h2 class="text-center mb-2">Crea tu cuenta en SESHA</h2>
+                            <p class="text-center text-muted mb-4">Regístrate para comenzar a gestionar tu empresa eficientemente.</p>
+
+                            <form id="registerForm" novalidate>
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <label for="fullname" class="form-label">Nombre completo</label>
+                                        <input id="fullname" name="fullname" type="text" class="form-control" required placeholder="Tu nombre completo">
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="company" class="form-label">Empresa (opcional)</label>
+                                        <input id="company" name="company" type="text" class="form-control" placeholder="Nombre de la empresa">
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="email" class="form-label">Correo electrónico</label>
+                                        <input id="email" name="email" type="email" class="form-control" required placeholder="tu@ejemplo.com">
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="password" class="form-label">Contraseña</label>
+                                        <input id="password" name="password" type="password" class="form-control" required minlength="8" placeholder="Mínimo 8 caracteres">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="confirm" class="form-label">Confirmar contraseña</label>
+                                        <input id="confirm" name="confirm" type="password" class="form-control" required minlength="8" placeholder="Repite la contraseña">
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="role" class="form-label">Rol</label>
+                                        <select id="role" name="role" class="form-select">
+                                            <option value="admin">Administrador</option>
+                                            <option value="manager">Gerente</option>
+                                            <option value="staff">Colaborador</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-12 d-flex align-items-center gap-2">
+                                        <input id="terms" type="checkbox" class="form-check-input" required>
+                                        <label for="terms" class="form-check-label mb-0">Acepto los términos y condiciones</label>
+                                    </div>
+
+                                    <div id="formError" role="alert" class="text-danger mt-2" style="min-height:1.2em;font-size:.95rem;"></div>
+
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary w-100">Crear cuenta</button>
+                                    </div>
+
+                                    <div class="col-12 text-center">
+                                        <p class="mb-0 mt-3 small text-muted">¿Ya tienes cuenta? <a href="landing.html" class="text-primary">Inicia sesión</a></p>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer id="contacto">
+        <p>Contacta con nosotros: info@sesha.com</p>
+        <p>© 2025 SESHA. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        (function () {
+            const form = document.getElementById('registerForm');
+            const pwd = document.getElementById('password');
+            const confirm = document.getElementById('confirm');
+            const errorEl = document.getElementById('formError');
+
+            form.addEventListener('submit', function (e) {
+                errorEl.textContent = '';
+                if (!form.checkValidity()) {
+                    errorEl.textContent = 'Por favor completa los campos requeridos correctamente.';
+                    e.preventDefault();
+                    return;
+                }
+                if (pwd.value !== confirm.value) {
+                    errorEl.textContent = 'Las contraseñas no coinciden.';
+                    e.preventDefault();
+                    return;
+                }
+                // Aquí puedes añadir la llamada fetch para enviar los datos al servidor.
+                // Ejemplo (descomentaar y ajustar endpoint):
+                // e.preventDefault();
+                // fetch('/api/register', { method:'POST', body: new FormData(form) }).then(...)
+
+            }, false);
+        })();
+    </script>
+</body>
+<!-- Bootstrap JS bundle (Popper + Bootstrap) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</html>

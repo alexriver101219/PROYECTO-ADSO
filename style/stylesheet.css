@@ -1,0 +1,94 @@
+:root{
+    --bg:#f6fbff;
+    --surface:#ffffff;
+    --primary:#0ea5a4;
+    --primary-2:#06b6d4;
+    --secondary:#7c3aed;
+    --text:#0b1220;
+    --muted:#6b7280;
+    --radius:12px;
+    --shadow-1: 0 8px 30px rgba(2,6,23,0.08);
+    --shadow-2: 0 18px 40px rgba(2,6,23,0.10);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, 'Arial';
+    color:var(--text);
+    background: radial-gradient(1200px 400px at 10% 10%, rgba(14,165,164,0.06), transparent), radial-gradient(800px 300px at 90% 90%, rgba(124,58,237,0.04), transparent), var(--bg);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.5;
+    /* dejar espacio para el header fijo */
+    padding-top:72px;
+}
+
+/* Header / Nav */
+header{
+    background: linear-gradient(90deg, rgba(255,255,255,0.98), rgba(255,255,255,0.95));
+    backdrop-filter: blur(6px);
+    position:sticky; top:0; z-index:100;
+    box-shadow:0 1px 0 rgba(0,0,0,0.04);
+}
+nav{max-width:1200px;margin:0 auto;padding:0.9rem 1rem;display:flex;align-items:center;justify-content:space-between}
+.logo{font-weight:800;color:var(--text);letter-spacing:1px;display:flex;align-items:center;gap:.6rem}
+.logo img{height:36px}
+.nav-links{display:flex;gap:1rem}
+.nav-links a{color:var(--muted);text-decoration:none;font-weight:600}
+.nav-links a:hover{color:var(--primary-2)}
+
+/* Layout helpers */
+.center-vh{min-height:70vh;display:flex;align-items:center;justify-content:center;padding:2rem}
+
+/* Cards / Forms */
+.register-card, .feature-card{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow-1);padding:1.4rem;border:1px solid rgba(15,23,42,0.04)}
+.register-card h2{margin-bottom:.6rem}
+
+label{display:block;margin-bottom:.35rem;color:var(--text);font-weight:600}
+input[type="text"],input[type="email"],input[type="password"],select,textarea{width:100%;padding:.72rem .9rem;border:1px solid #e0e6ea;border-radius:8px;background:#fff;font-size:1rem}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 6px 18px rgba(14,165,164,0.08)}
+
+.cta-button{display:inline-block;background:linear-gradient(90deg,var(--primary),var(--primary-2));color:#fff;padding:.75rem 1.2rem;border-radius:12px;border:none;font-weight:700;cursor:pointer;box-shadow:0 12px 32px rgba(14,165,164,0.12)}
+.cta-button:hover{transform:translateY(-3px)}
+
+/* Bootstrap button harmonization: usar variables de tema para btn-primary */
+.btn-primary{
+    background: linear-gradient(90deg,var(--primary),var(--primary-2)) !important;
+    border: none !important;
+    box-shadow: 0 12px 32px rgba(14,165,164,0.12) !important;
+}
+.btn-primary:hover, .btn-primary:focus{
+    filter: brightness(1.03) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Hero / Features */
+.hero{padding:3.2rem 1rem;max-width:1100px;margin:1.6rem auto;border-radius:14px}
+.hero-content h1{font-size:2.25rem;margin-bottom:.5rem}
+.features{padding:2.8rem 1rem 4rem;max-width:1100px;margin:0 auto}
+.features-grid{display:grid;gap:1.4rem;grid-template-columns:1fr;margin-top:1rem}
+
+.feature-card i{font-size:1.6rem;color:var(--primary);display:block;width:48px;height:48px;line-height:48px;border-radius:10px;margin:0 auto 0.6rem;background:linear-gradient(90deg,rgba(6,182,212,0.12),rgba(124,58,237,0.08))}
+.feature-card h3{margin-bottom:.4rem;color:var(--text)}
+.feature-card p{color:var(--muted);font-size:.96rem}
+
+/* Footer */
+footer{margin-top:2.4rem;padding:1.6rem 1rem;text-align:center;color:var(--muted)}
+
+/* Responsive */
+@media (min-width:820px){.features-grid{grid-template-columns:repeat(3,1fr)}.hero-inner{flex-direction:row}}
+
+/* Small helpers */
+.login-container{max-width:420px;margin:3.2rem auto;padding:1.6rem}
+.login-form .form-group{margin-bottom:1rem}
+.login-form label{font-weight:700}
+
+/* register specific */
+.register-hero{margin-top:84px;padding:3rem 1rem;text-align:center;background:linear-gradient(180deg, rgba(14,165,164,0.03), rgba(124,58,237,0.01));border-radius:0 0 18px 18px}
+
+/* small screens */
+@media (max-width:480px){body{font-size:15px}.nav-links{display:none}}
+
+/* minimal animation */
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}

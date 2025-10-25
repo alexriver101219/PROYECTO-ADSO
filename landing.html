@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SESHA - Plataforma de Gestión</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Bootstrap CSS (CDN + SRI) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="style/stylesheet.css">
+    <!-- Estilos rápidos para la imagen de la app -->
+    <style>
+        .app-image {
+            max-width: 320px;
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            display: block;
+            margin: 1rem auto;
+        }
+        /* opción para layout: imagen al lado del texto en pantallas grandes */
+        .hero-inner {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-direction: column;
+        }
+        @media (min-width: 900px) {
+            .hero-inner {
+                flex-direction: row;
+                justify-content: center;
+            }
+            .hero-content { max-width: 50%; text-align: left; }
+            .hero-image-wrapper { max-width: 40%; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">SESHA</div>
+            <div class="nav-links">
+                <a href="#inicio">Inicio</a>
+                <a href="#caracteristicas">Características</a>
+                <a href="#contacto">Contacto</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero" id="inicio">
+        <div class="hero-inner">
+            <div class="hero-content">
+                <h1>Bienvenido a SESHA</h1>
+                <p>La plataforma integral para la gestión eficiente de tu empresa</p>
+                <a href="#contacto" class="cta-button">Comienza Ahora</a>
+            </div>
+            <div class="hero-image-wrapper">
+                <!-- Se agrega la imagen de la app (archivo renombrado a 'sesha-app.png') -->
+                <img src="assets/sesha-app.png" alt="SESHA APP" class="app-image">
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="caracteristicas">
+        <h2 style="text-align: center;">Nuestras Características</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fas fa-chart-line"></i>
+                <h3>Análisis Avanzado</h3>
+                <p>Obtén insights valiosos con nuestras herramientas de análisis</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Seguridad Garantizada</h3>
+                <p>Tus datos están protegidos con la mejor tecnología de seguridad</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-sync"></i>
+                <h3>Sincronización en Tiempo Real</h3>
+                <p>Mantén tu información actualizada en todo momento</p>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contacto">
+        <p>Contacta con nosotros: info@sesha.com</p>
+        <p>© 2025 SESHA. Todos los derechos reservados.</p>
+    </footer>
+</body>
+<!-- Bootstrap JS bundle (Popper + Bootstrap) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</html>
+</html>
+
