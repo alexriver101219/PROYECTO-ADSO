@@ -4,25 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Registro - SESHA</title>
-    <!-- Bootstrap CSS (CDN + SRI) -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="style/stylesheet.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- Añadido: imagen de la app en la sección de registro -->
-    <section class="register-hero" style="text-align:center; padding:1.2rem 1rem;">
-    <!-- Archivo renombrado a 'sesha-app.png' para evitar espacios y problemas de URL -->
-    <img src="assets/sesha-app.png" alt="SESHA APP" class="app-image" style="max-width:320px; width:100%; height:auto; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.12); display:inline-block;">
+    <section class="register-hero text-center py-4">
+        <img src="assets/sesha-app.png" alt="SESHA APP" class="app-image img-fluid" style="max-width:320px; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.12);">
     </section>
 
     <header>
-        <nav>
-            <div class="logo">SESHA</div>
-            <div class="nav-links">
-                <a href="landing.html">Inicio</a>
-                <a href="landing.html#caracteristicas">Características</a>
-                <a href="landing.html#contacto">Contacto</a>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
+            <div class="logo fw-bold">SESHA</div>
+            <div class="ms-auto">
+                <a href="landing.html" class="me-3 text-decoration-none">Inicio</a>
+                <a href="landing.html#caracteristicas" class="me-3 text-decoration-none">Características</a>
+                <a href="landing.html#contacto" class="text-decoration-none">Contacto</a>
             </div>
         </nav>
     </header>
@@ -31,8 +28,8 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
-                    <div class="card register-card">
-                        <div class="card-body">
+                    <div class="card shadow-sm">
+                        <div class="card-body p-4">
                             <h2 class="text-center mb-2">Crea tu cuenta en SESHA</h2>
                             <p class="text-center text-muted mb-4">Regístrate para comenzar a gestionar tu empresa eficientemente.</p>
 
@@ -71,19 +68,28 @@
                                         </select>
                                     </div>
 
-                                    <div class="col-12 d-flex align-items-center gap-2">
-                                        <input id="terms" type="checkbox" class="form-check-input" required>
-                                        <label for="terms" class="form-check-label mb-0">Acepto los términos y condiciones</label>
+                                    <div class="col-12">
+                                        <div class="form-check">
+                                            <input id="publicacion" name="publicacion" type="checkbox" class="form-check-input">
+                                            <label for="publicacion" class="form-check-label">Permitir publicación de datos</label>
+                                        </div>
                                     </div>
-
-                                    <div id="formError" role="alert" class="text-danger mt-2" style="min-height:1.2em;font-size:.95rem;"></div>
 
                                     <div class="col-12">
-                                        <button type="submit" class="btn btn-primary w-100">Crear cuenta</button>
+                                        <div class="form-check">
+                                            <input id="terms" type="checkbox" class="form-check-input" required>
+                                            <label for="terms" class="form-check-label">Acepto los términos y condiciones</label>
+                                        </div>
                                     </div>
 
-                                    <div class="col-12 text-center">
-                                        <p class="mb-0 mt-3 small text-muted">¿Ya tienes cuenta? <a href="landing.html" class="text-primary">Inicia sesión</a></p>
+                                    <div id="formError" role="alert" class="text-danger mt-2" style="min-height:1.2em; font-size:.95rem;"></div>
+
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary w-100 py-2">Crear cuenta</button>
+                                    </div>
+
+                                    <div class="col-12 text-center mt-3">
+                                        <p class="small text-muted">¿Ya tienes cuenta? <a href="index.html" class="text-primary text-decoration-none">Inicia sesión</a></p>
                                     </div>
                                 </div>
                             </form>
@@ -94,39 +100,66 @@
         </div>
     </main>
 
-    <footer id="contacto">
-        <p>Contacta con nosotros: info@sesha.com</p>
-        <p>© 2025 SESHA. Todos los derechos reservados.</p>
+    <footer id="contacto" class="text-center py-4 bg-light border-top">
+        <p class="mb-1">Contacta con nosotros: <a href="mailto:info@sesha.com">info@sesha.com</a></p>
+        <p class="text-muted small">© 2025 SESHA. Todos los derechos reservados.</p>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script>
         (function () {
             const form = document.getElementById('registerForm');
             const pwd = document.getElementById('password');
             const confirm = document.getElementById('confirm');
+            const terms = document.getElementById('terms');
             const errorEl = document.getElementById('formError');
 
             form.addEventListener('submit', function (e) {
+                e.preventDefault();
                 errorEl.textContent = '';
+
                 if (!form.checkValidity()) {
-                    errorEl.textContent = 'Por favor completa los campos requeridos correctamente.';
-                    e.preventDefault();
+                    errorEl.textContent = 'Por favor completa todos los campos requeridos.';
+                    form.classList.add('was-validated');
                     return;
                 }
+
+                if (!terms.checked) {
+                    errorEl.textContent = 'Debes aceptar los términos y condiciones.';
+                    return;
+                }
+
                 if (pwd.value !== confirm.value) {
                     errorEl.textContent = 'Las contraseñas no coinciden.';
-                    e.preventDefault();
                     return;
                 }
-                // Aquí puedes añadir la llamada fetch para enviar los datos al servidor.
-                // Ejemplo (descomentaar y ajustar endpoint):
-                // e.preventDefault();
-                // fetch('/api/register', { method:'POST', body: new FormData(form) }).then(...)
 
+                // Preparar datos como JSON
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData);
+
+                fetch('/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Registro exitoso.');
+                        window.location.href = 'index.html';
+                    } else {
+                        errorEl.textContent = data.message || 'Error en el registro.';
+                    }
+                })
+                .catch(err => {
+                    errorEl.textContent = 'No se pudo conectar con el servidor.';
+                });
             }, false);
         })();
     </script>
 </body>
-<!-- Bootstrap JS bundle (Popper + Bootstrap) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </html>
