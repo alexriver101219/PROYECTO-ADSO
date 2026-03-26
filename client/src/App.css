@@ -183,11 +183,36 @@
   }
 }
 
-.app-container {
+..app-container {
   max-width: 680px;
   margin: 16px auto;
   padding: 16px;
   font-family: 'Inter', sans-serif;
+}
+
+.sesha-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.sesha-logo img {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  border: 2px solid #1e293b;
+}
+
+.sesha-logo strong {
+  font-size: 1.25rem;
+  display: block;
+}
+
+.sesha-logo p {
+  margin: 0;
+  color: #475569;
+  font-size: 0.9rem;
 }
 
 .nav-actions {
@@ -255,5 +280,46 @@
   background: #fee2e2;
   color: #991b1b;
   border: 1px solid #fecaca;
+}
+
+.user-greeting {
+  color: #2563eb;
+  font-size: 1.1rem;
+  margin: 8px 0;
+}
+
+.user-info {
+  background: #f0f4ff;
+  border: 1px solid #dbeafe;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 16px;
+}
+
+.user-info h4 {
+  margin-top: 0;
+  color: #1e40af;
+}
+
+.user-info code {
+  background: #fff;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: 'Monaco', monospace;
+  color: #dc2626;
+}
+
+.logout-btn {
+  background-color: #dc2626;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.logout-btn:hover {
+  background-color: #991b1b;
 }
 
