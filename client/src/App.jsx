@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import LandingPage from './pages/LandingPage'
+import DashboardPage from './pages/DashboardPage'
 import NotFound from './utils/RouteGuards'
 import { ProtectedRoute } from './utils/RouteGuards'
 import './App.css'
@@ -17,6 +18,14 @@ function App() {
           element={
             <ProtectedRoute>
               <LandingPage />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/dashboard" 
+          element={
+            <ProtectedRoute>
+              <DashboardPage />
             </ProtectedRoute>
           } 
         />

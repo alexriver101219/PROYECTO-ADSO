@@ -3,6 +3,9 @@ import axios from 'axios'
 
 const AuthContext = createContext()
 
+// URL para requests - cambia en producción
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
   const [token, setToken] = useState(localStorage.getItem('token') || null)
@@ -15,7 +18,10 @@ export function AuthProvider({ children }) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
         // Validar token con backend (opcional)
         try {
-          await axios.get('/api/profile')
+          const res = await axios.get(`${API_URL}/api/profile`)
+          if (res.data.success) {
+            setUser(res.data.user)
+          }
         } catch {
           localStorage.removeItem('token')
           setToken(null)
@@ -29,7 +35,7 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     try {
-      const res = await axios.post('/login', { email, password })
+      const res = await axios.post(`${API_URL}/login`, { email, password })
       if (res.data.success) {
         const { token: newToken, user: userData } = res.data
         setToken(newToken)
@@ -46,7 +52,7 @@ export function AuthProvider({ children }) {
 
   const register = async (fullname, email, password, role) => {
     try {
-      const res = await axios.post('/register', { fullname, email, password, role })
+      const res = await axios.post(`${API_URL}/register`, { fullname, email, password, role })
       if (res.data.success) {
         const { token: newToken, user: userData } = res.data
         setToken(newToken)
