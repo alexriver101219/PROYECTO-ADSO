@@ -8,11 +8,19 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
+import java.security.SecureRandom;
+import java.time.Instant;
+import java.util.regex.Pattern;
 
 public class Server {
     private static final String ROOT_DIR = System.getProperty("user.dir");
     private static final String USERS_FILE = ROOT_DIR + "/users.json";
     private static Map<String, User> users = new ConcurrentHashMap<>();
+    private static final String SECRET_KEY = "your-secret-key-change-in-production"; // Cambia esto en producción
+    private static final long TOKEN_EXPIRY = 3600000; // 1 hora en ms
 
     static class User {
         String fullname, email, password, role, company;
@@ -34,6 +42,7 @@ public class Server {
         server.createContext("/", new StaticFileHandler());
         server.createContext("/register", new RegisterHandler());
         server.createContext("/login", new LoginHandler());
+        server.createContext("/api/profile", new ProfileHandler()); // New endpoint for token validation
         server.setExecutor(null);
         server.start();
         System.out.println("Servidor iniciado en http://localhost:8080");
@@ -91,11 +100,15 @@ public class Server {
             if (fullname == null || email == null || password == null || !terms || !password.equals(confirm) || users.containsKey(email)) {
                 response = "{\"success\": false, \"message\": \"Datos inválidos o usuario ya existe\"}";
             } else {
-                users.put(email, new User(fullname, email, password, role, company, publicacion));
+                users.put(email, new User(fullname, email, hashPassword(password), role, company, publicacion));
                 saveUsers();
-                response = "{\"success\": true, \"message\": \"Registro exitoso\"}";
+                String token = generateJWT(email);
+                response = "{\"success\": true, \"message\": \"Registro exitoso\", \"token\": \"" + token + "\", \"user\": {\"fullname\": \"" + fullname + "\", \"email\": \"" + email + "\", \"role\": \"" + role + "\"}}";
             }
             exchange.getResponseHeaders().set("Content-Type", "application/json");
+            exchange.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
+            exchange.getResponseHeaders().set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+            exchange.getResponseHeaders().set("Access-Control-Allow-Headers", "Content-Type, Authorization");
             exchange.sendResponseHeaders(200, response.getBytes().length);
             try (OutputStream os = exchange.getResponseBody()) {
                 os.write(response.getBytes());
@@ -117,12 +130,16 @@ public class Server {
 
             String response;
             User user = users.get(email);
-            if (user != null && user.password.equals(password)) {
-                response = "{\"success\": true, \"message\": \"Login exitoso\"}";
+            if (user != null && verifyPassword(password, user.password)) {
+                String token = generateJWT(email);
+                response = "{\"success\": true, \"message\": \"Login exitoso\", \"token\": \"" + token + "\", \"user\": {\"fullname\": \"" + user.fullname + "\", \"email\": \"" + user.email + "\", \"role\": \"" + user.role + "\"}}";
             } else {
                 response = "{\"success\": false, \"message\": \"Credenciales inválidas\"}";
             }
             exchange.getResponseHeaders().set("Content-Type", "application/json");
+            exchange.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
+            exchange.getResponseHeaders().set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+            exchange.getResponseHeaders().set("Access-Control-Allow-Headers", "Content-Type, Authorization");
             exchange.sendResponseHeaders(200, response.getBytes().length);
             try (OutputStream os = exchange.getResponseBody()) {
                 os.write(response.getBytes());

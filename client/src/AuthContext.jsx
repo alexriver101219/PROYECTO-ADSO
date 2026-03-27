@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from 'react'
 import axios from 'axios'
 
-const AuthContext = createContext()
+export const AuthContext = createContext()
 
 // URL para requests - cambia en producción
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
