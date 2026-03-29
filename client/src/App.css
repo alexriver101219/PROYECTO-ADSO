@@ -183,7 +183,7 @@
   }
 }
 
-..app-container {
+.app-container {
   max-width: 680px;
   margin: 16px auto;
   padding: 16px;

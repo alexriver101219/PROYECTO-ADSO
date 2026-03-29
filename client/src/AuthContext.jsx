@@ -18,11 +18,11 @@ export function AuthProvider({ children }) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
         // Validar token con backend (opcional)
         try {
-          const res = await axios.get(`${API_URL}/api/profile`)
+          const res = await axios.get(`api/profile`)
           if (res.data.success) {
             setUser(res.data.user)
           }
-        } catch {
+        } catch (error) {
           localStorage.removeItem('token')
           setToken(null)
           setUser(null)
@@ -62,8 +62,8 @@ export function AuthProvider({ children }) {
         return { success: true }
       }
       return { success: false, message: res.data.message }
-    } catch (err) {
-      return { success: false, message: err.response?.data?.message || 'Error de red' }
+    } catch (error) {
+      return { success: false, message: error.response?.data?.message || 'Error de red' }
     }
   }
 

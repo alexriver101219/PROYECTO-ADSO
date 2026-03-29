@@ -11,9 +11,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
-import java.security.SecureRandom;
-import java.time.Instant;
-import java.util.regex.Pattern;
 
 public class Server {
     private static final String ROOT_DIR = System.getProperty("user.dir");
@@ -145,6 +142,92 @@ public class Server {
                 os.write(response.getBytes());
             }
         }
+    }
+
+    static class ProfileHandler implements HttpHandler {
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+            if (!"GET".equals(exchange.getRequestMethod())) {
+                exchange.sendResponseHeaders(405, 0);
+                exchange.getResponseBody().close();
+                return;
+            }
+            String authHeader = exchange.getRequestHeaders().getFirst("Authorization");
+            String response;
+            if (authHeader != null && authHeader.startsWith("Bearer ")) {
+                String token = authHeader.substring(7);
+                String email = validateToken(token);
+                if (email != null) {
+                    User user = users.get(email);
+                    if (user != null) {
+                        response = "{\"success\": true, \"user\": {\"fullname\": \"" + user.fullname + "\", \"email\": \"" + user.email + "\", \"role\": \"" + user.role + "\", \"company\": \"" + user.company + "\", \"publicacion\": " + user.publicacion + "}}";
+                    } else {
+                        response = "{\"success\": false, \"message\": \"Usuario no encontrado\"}";
+                    }
+                } else {
+                    response = "{\"success\": false, \"message\": \"Token inválido\"}";
+                }
+            } else {
+                response = "{\"success\": false, \"message\": \"Token requerido\"}";
+            }
+            exchange.getResponseHeaders().set("Content-Type", "application/json");
+            exchange.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
+            exchange.getResponseHeaders().set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+            exchange.getResponseHeaders().set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+            exchange.sendResponseHeaders(200, response.getBytes().length);
+            try (OutputStream os = exchange.getResponseBody()) {
+                os.write(response.getBytes());
+            }
+        }
+    }
+
+    private static String hashPassword(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hash = md.digest(password.getBytes());
+            return Base64.getEncoder().encodeToString(hash);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static boolean verifyPassword(String password, String hashed) {
+        return hashPassword(password).equals(hashed);
+    }
+
+    private static String generateJWT(String email) {
+        long expiry = System.currentTimeMillis() + TOKEN_EXPIRY;
+        String payload = email + ":" + expiry;
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            String toHash = payload + SECRET_KEY;
+            byte[] hash = md.digest(toHash.getBytes());
+            return Base64.getEncoder().encodeToString((payload + ":" + Base64.getEncoder().encodeToString(hash)).getBytes());
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static String validateToken(String token) {
+        try {
+            String decoded = new String(Base64.getDecoder().decode(token));
+            String[] parts = decoded.split(":");
+            if (parts.length == 3) {
+                String email = parts[0];
+                long expiry = Long.parseLong(parts[1]);
+                String hash = parts[2];
+                if (System.currentTimeMillis() > expiry) {
+                    return null;
+                }
+                String expectedHash = Base64.getEncoder().encodeToString(MessageDigest.getInstance("SHA-256").digest((email + ":" + expiry + SECRET_KEY).getBytes()));
+                if (expectedHash.equals(hash)) {
+                    return email;
+                }
+            }
+        } catch (Exception e) {
+            // Invalid token
+        }
+        return null;
     }
 
     private static Map<String, String> parseFormData(HttpExchange exchange) throws IOException {

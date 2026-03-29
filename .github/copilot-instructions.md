@@ -1,17 +1,25 @@
 # Instrucciones para Copilot
 
-## Arquitectura del Proyecto
-- El proyecto está estructurado en archivos HTML y CSS, donde cada archivo HTML representa una página específica (por ejemplo, `index.html` para el inicio de sesión y `register.html` para el registro).
-- Los estilos se gestionan a través de `stylesheet.css`, que define la apariencia de los elementos en las páginas.
+## Arquitectura
+- Aplicación full-stack con frontend React (Vite) y backend Node.js/Express + MongoDB
+- Autenticación JWT con roles (admin/user)
+- Comunicación API vía Axios, proxy en desarrollo para evitar CORS
+- Ver DEPLOY.md para detalles de arquitectura y despliegue
 
-## Flujos de Trabajo
-- Las páginas HTML incluyen formularios que utilizan validación básica en el lado del cliente. Por ejemplo, en `register.html`, se verifica que las contraseñas coincidan y que todos los campos requeridos estén completos antes de enviar el formulario.
-- Se puede implementar una llamada a la API para enviar datos del formulario al servidor, como se indica en el script de `register.html`.
+## Build and Test
+- Instalar dependencias: `npm install` en raíz y `client/`
+- Desarrollo: `npm run dev` (corre backend y frontend simultáneamente)
+- Build producción: `npm run build` (cliente optimizado)
+- No hay framework de tests configurado
 
 ## Convenciones
-- Los nombres de los archivos deben ser descriptivos y reflejar su contenido (por ejemplo, `register.html` para la página de registro).
-- Se recomienda mantener un estilo de codificación consistente en HTML y CSS, utilizando comentarios para secciones importantes del código.
+- Componentes React en PascalCase, archivos descriptivos
+- Estado global con Context API (AuthContext)
+- Passwords hasheadas con bcrypt en Mongoose pre-save hooks
+- ESLint configurado para React, ver client/eslint.config.js
 
-## Puntos de Integración
-- El formulario de registro en `register.html` está diseñado para integrarse con un backend a través de una llamada `fetch` que se puede descomentar y ajustar según sea necesario.
-- Se debe considerar la implementación de un sistema de gestión de errores para mejorar la experiencia del usuario.
+## Estilo de Código
+- React moderno con hooks y componentes funcionales
+- Axios para llamadas API con headers de autorización
+- Manejo básico de errores, logging en consola
+- CSS con clases BEM-like en componentes
